@@ -41,7 +41,7 @@ export const MODULES = [
 
   { key: 'sales', no: 9, requires: ['items', 'recipes', 'stock'], href: '/sales', icon: 'receipt',
     name: 'Sales', si: 'විකුණුම්',
-    blurb: 'විකුණුම් ගහනවා (හෝ පිටතින් API එකෙන් එවනවා), recipe එකට අනුව තොගය ඉබේ අඩු වෙනවා.' },
+    blurb: 'කවුන්ටරයේ order ගහලා bill print කරනවා. වට්ටෝරුවට අනුව තොගය ඉබේ අඩු වෙනවා.' },
 
   { key: 'reports', no: 10, requires: ['items'], href: '/reports', icon: 'chart',
     name: 'Reports', si: 'වාර්තා',

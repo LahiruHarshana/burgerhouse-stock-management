@@ -162,6 +162,7 @@ const RecipeSchema = new Schema({
     qty: { type: Number, default: 0 },
     extraPrice: money,
   }],
+  posCategory: { type: String, enum: ['BURGERS', 'SIDES', 'DRINKS', 'OTHER'] },
   sellPrice: money,
   cachedCost: money,          // ගණනය කරලා තියාගන්නවා -> report ඉක්මන්
   costUpdatedAt: Date,
@@ -261,7 +262,7 @@ const StocktakeSchema = new Schema({
 
 const SaleSchema = new Schema({
   ref: { type: String, required: true, unique: true },
-  source: { type: String, default: 'MANUAL' },   // MANUAL | API | POS name
+  source: { type: String, default: 'MANUAL' },   // MANUAL | API | TERMINAL
   location: oid('Location'),
   lines: [{
     recipe: oid('Recipe'), item: oid('Item'),
@@ -270,6 +271,8 @@ const SaleSchema = new Schema({
     modifiers: [String],
   }],
   total: money, totalCost: money,
+  paymentMethod: { type: String, enum: ['CASH', 'CARD'] },
+  serviceType: { type: String, enum: ['DINE_IN', 'TAKEAWAY'] },
   at: { type: Date, default: Date.now },
   user: oid('User'), userName: String,
 }, { timestamps: true });

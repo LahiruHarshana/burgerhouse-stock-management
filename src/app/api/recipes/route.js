@@ -2,6 +2,7 @@ import { Recipe, Item } from '@/models';
 import { guard, ok, badKey, body, log } from '@/lib/api';
 import { CAN } from '@/lib/auth';
 import { recipeCost } from '@/lib/recipe';
+import { POS_CATEGORIES } from '@/lib/pos';
 
 
 // මේවා හැම request එකකදිම අලුතෙන් run වෙන්න ඕන (cache වෙන්න බෑ)
@@ -35,6 +36,7 @@ export async function POST(req) {
       name: m.name, item: m.item || undefined, qty: Number(m.qty) || 0, extraPrice: Number(m.extraPrice) || 0,
     })),
     sellPrice: Number(b.sellPrice) || 0,
+    posCategory: POS_CATEGORIES.includes(b.posCategory) ? b.posCategory : undefined,
   });
   await recipeCost(recipe._id, true);
   await log(g.user, 'CREATE', 'Recipe', recipe._id, { name: recipe.name });

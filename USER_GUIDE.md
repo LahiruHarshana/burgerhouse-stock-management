@@ -487,28 +487,39 @@ Costing method (FIFO or Weighted average) is set in Settings and shown at the to
 
 **Menu:** Sales
 
-**Purpose:** Record customer sales. Each sale **deducts recipe ingredients** from stock.
+**Purpose:** Take customer orders on the **counter terminal**, print a bill from that machine, and keep a history of sales. Each sale **deducts recipe ingredients** from stock.
 
 **Requires:** Items + Recipes + Stock  
-**Who can record:** Chef and above
+**Who can take orders:** Chef and above  
+**Who can view history:** Anyone who can open Sales
 
-### Record a sale manually
+### Take an order (counter terminal)
 
-1. Click **Record sale**.
-2. Tap recipes to add to cart — e.g.:
-   - Cheese Burger × 2  
-   - Regular Fries × 1  
-   - Coca-Cola 330ml Can × 2  
-3. Check **Total**.
-4. Click **Save sale**.
+1. Open **Sales** and click **Open terminal** (or go to `/terminal`).
+2. Use the **category tabs** (All, Burgers, Sides, Drinks) or search to find items.
+3. Tap a menu tile to add it — a badge shows the quantity. Tap again to add another.
+4. Choose **Takeaway** or **Dine in**.
+5. Adjust quantities with **+** / **−** on the ticket, or **Clear order** to start over.
+6. Choose **Cash** or **Card**.
+7. Click **Charge & print**.
+8. The sale is saved and the browser print dialog opens. Choose the printer attached to this computer (thermal roll or A4).
+9. Hand the bill to the customer, then click **New order**.
 
-**Result:** Sale appears in the list; stock of all recipe ingredients decreases.
+If the print dialog was cancelled, click **Print bill** on the preview to try again.
+
+**Result:** The sale appears in Sales history; stock of all recipe ingredients decreases.
+
+### Reprint a bill
+
+On the Sales list, click the printer icon on a row. The same bill opens and the print dialog runs again.
 
 ### Summary cards
 
 - **Sales** — total revenue  
 - **Ingredient cost** — cost of ingredients used  
 - **Food cost %** — cost ÷ sales  
+
+An external POS can still send sales via the API (see §21).
 
 ---
 
@@ -663,7 +674,7 @@ A typical day at **Burger House**:
 
 ### During service
 
-4. **Sales** — record each order (or POS sends sales via API).
+4. **Sales → Open terminal** — take each order and print the bill (or POS sends sales via API).
 5. **Wastage** — record burnt patties or dropped buns immediately.
 
 ### End of day
@@ -707,7 +718,7 @@ If you use an external Point of Sale system, it can post sales to Burger House S
 
 Recipe IDs come from your Recipes data. Each line deducts ingredients per the recipe.
 
-**Without API key:** Logged-in users with Chef role or above can post sales from the Sales page in the browser.
+**Without API key:** Logged-in users with Chef role or above take orders on the **counter terminal** (`/terminal`). That still uses this same `POST /api/sales` endpoint.
 
 ---
 
@@ -719,6 +730,7 @@ Recipe IDs come from your Recipes data. Each line deducts ingredients per the re
 | Cannot log in | Username/password; ask Owner to reset |
 | Stock did not increase after delivery | Record a **GRN** under Purchasing, not just a PO |
 | Stock did not decrease after sale | Sale must use a **recipe**; recipe must have ingredients |
+| Print dialog did not open | Use **Print bill** on the preview; check the computer has a printer installed |
 | Wrong language on page | Use sidebar **English \| සිංහල** toggle; refresh if needed |
 | Food cost seems wrong | Update item costs via GRN; check recipes and wastage entries |
 

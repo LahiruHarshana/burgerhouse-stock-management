@@ -29,7 +29,8 @@
     "password": "Password",
     "language": "Language",
     "languageEn": "English",
-    "languageSi": "සිංහල"
+    "languageSi": "සිංහල",
+    "print": "Print"
   },
   "errors": {
     "loginRequired": "Please log in",
@@ -138,6 +139,20 @@
       "KEG": "Keg",
       "DRAFT": "Draft",
       "": "—"
+    },
+    "payment": {
+      "CASH": "Cash",
+      "CARD": "Card"
+    },
+    "serviceType": {
+      "DINE_IN": "Dine in",
+      "TAKEAWAY": "Takeaway"
+    },
+    "posCategory": {
+      "BURGERS": "Burgers",
+      "SIDES": "Sides",
+      "DRINKS": "Drinks",
+      "OTHER": "Other"
     }
   },
   "modules": {
@@ -175,7 +190,7 @@
     },
     "sales": {
       "title": "Sales",
-      "blurb": "Record sales (or send them via API); stock deducts by recipe."
+      "blurb": "Counter terminal for orders and printed bills; stock deducts by recipe. External POS can still send sales via API."
     },
     "reports": {
       "title": "Reports",
@@ -339,6 +354,9 @@
       "fieldYield": "Yield quantity",
       "fieldYieldHint": "How many portions one batch makes",
       "fieldSell": "Selling price",
+      "fieldPosCat": "POS category",
+      "fieldPosCatHint": "Used as a tab on the order terminal",
+      "posCatAuto": "Auto (from name)",
       "fieldIngredients": "Ingredients",
       "fieldIngredientsHint": "Enter how much of each item is used",
       "unitCost": "Unit cost",
@@ -482,21 +500,40 @@
     },
     "sales": {
       "title": "Sales",
-      "subtitle": "Recording a sale here deducts ingredients from stock based on recipes.",
-      "add": "Record sale",
+      "subtitle": "Open the counter terminal to take orders and print bills. Each sale deducts recipe ingredients from stock.",
+      "openTerminal": "Open terminal",
       "statSales": "Sales",
       "statCost": "Ingredient cost",
       "statFoodCost": "Food cost",
       "emptyTitle": "No sales yet",
-      "emptyHint": "If you have a POS, you can send sales via API — see the key in Settings.",
+      "emptyHint": "Take an order on the counter terminal, or send sales from an external POS using the API key in Settings.",
       "colNo": "No.",
       "colItems": "Items",
       "colAmount": "Amount",
-      "modalTitle": "Record sale",
-      "modalNoRecipes": "Create recipes first. Go to the Recipes page.",
-      "cartTotal": "Total",
-      "submit": "Save sale",
-      "toastSaved": "Sale recorded. Stock updated."
+      "cartTotal": "Total"
+    },
+    "terminal": {
+      "search": "Search menu",
+      "searchPh": "Burger, fries…",
+      "cart": "Order",
+      "cartEmpty": "Tap items to add them",
+      "catAll": "All",
+      "itemsCount": "{count} items",
+      "clear": "Clear order",
+      "location": "Stock location",
+      "pay": "Payment",
+      "charge": "Charge & print",
+      "printBill": "Print bill",
+      "newOrder": "New order",
+      "backToSales": "Sales",
+      "noRecipes": "Create menu recipes first. Go to the Recipes page.",
+      "noMatch": "No items match that search.",
+      "thanks": "Thank you",
+      "cashier": "Cashier",
+      "qty": "Qty",
+      "qtyDown": "Decrease quantity",
+      "qtyUp": "Increase quantity",
+      "item": "Item"
     },
     "reports": {
       "title": "Reports",

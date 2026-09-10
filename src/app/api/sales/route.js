@@ -67,11 +67,36 @@ export async function POST(req) {
   }
   if (!built.length) return badKey(locale, 'errors.noValidRecipes');
 
+  let source = 'MANUAL';
+  if (key) source = b.source || 'API';
+  else if (b.source === 'TERMINAL') source = 'TERMINAL';
+
+  const PAY = new Set(['CASH', 'CARD']);
+  const paymentMethod = PAY.has(b.paymentMethod) ? b.paymentMethod : undefined;
+  const SVC = new Set(['DINE_IN', 'TAKEAWAY']);
+  const serviceType = SVC.has(b.serviceType) ? b.serviceType : undefined;
+
   const sale = await Sale.create({
     ref: b.ref || await nextRef(Sale, 'ref', 'SL'),
-    source: key ? (b.source || 'API') : 'MANUAL',
+    source,
     location, lines: built, total, totalCost,
+    ...(paymentMethod ? { paymentMethod } : {}),
+    ...(serviceType ? { serviceType } : {}),
     at: b.at || new Date(), user: user?.id, userName: user?.name,
   });
-  return ok({ sale: { ref: sale.ref, total, totalCost } });
+  return ok({
+    sale: {
+      _id: sale._id,
+      ref: sale.ref,
+      at: sale.at,
+      source: sale.source,
+      lines: built.map((l) => ({ name: l.name, qty: l.qty, price: l.price })),
+      total: sale.total,
+      totalCost: sale.totalCost,
+      userName: sale.userName,
+      paymentMethod: sale.paymentMethod,
+      serviceType: sale.serviceType,
+      location: sale.location,
+    },
+  });
 }

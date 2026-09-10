@@ -21,7 +21,14 @@ module.exports = {
         out: { DEFAULT: '#B3312A', light: '#FBE6E4' },
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'var(--font-sinhala)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'var(--font-sinhala)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
+      fontWeight: {
+        light: '300',
+        normal: '400',
+        medium: '500',
+        semibold: '600',
+        bold: '700',
       },
       borderRadius: {
         card: '12px',

@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from './Icon';
 import { MODULE_MAP } from '@/lib/modules';
 import { useI18n } from './I18nProvider';
@@ -11,6 +11,7 @@ export default function Shell({ user, shopName, enabled, alerts = 0, children })
   const path = usePathname();
   const [open, setOpen] = useState(false);
   const { t, displayModule } = useI18n();
+  const terminal = path.startsWith('/terminal');
 
   const nav = [
     { href: '/', label: t('shell.home'), icon: 'home' },
@@ -37,6 +38,28 @@ export default function Shell({ user, shopName, enabled, alerts = 0, children })
       </Link>
     );
   };
+
+  if (terminal) {
+    return (
+      <div className="min-h-screen flex flex-col bg-[#E8EEEA]">
+        <header className="sticky top-0 z-40 flex items-center gap-2 sm:gap-3 h-14 px-3 sm:px-4 bg-brand-dark text-white">
+          <span className="font-semibold truncate">{shopName}</span>
+          <PosClock />
+          <span className="text-white/60 truncate hidden sm:inline text-sm">{user.name}</span>
+          <div className="ml-auto flex items-center gap-2 shrink-0">
+            <LocaleSwitcher variant="terminal" />
+            <Link href="/sales" className="h-9 px-3 rounded-lg text-sm font-semibold bg-white/10 hover:bg-white/15">{t('pages.terminal.backToSales')}</Link>
+            <form action="/api/auth/logout" method="post">
+              <button className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" aria-label={t('shell.logout')} title={t('shell.logout')}>
+                <Icon name="out" size={18} />
+              </button>
+            </form>
+          </div>
+        </header>
+        <main className="flex-1 min-w-0 min-h-0">{children}</main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen lg:flex bg-wall">
@@ -101,4 +124,16 @@ export default function Shell({ user, shopName, enabled, alerts = 0, children })
       <main className="flex-1 min-w-0">{children}</main>
     </div>
   );
+}
+
+function PosClock() {
+  const [now, setNow] = useState('');
+  useEffect(() => {
+    const tick = () => setNow(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    tick();
+    const id = setInterval(tick, 15000);
+    return () => clearInterval(id);
+  }, []);
+  if (!now) return null;
+  return <span className="num text-white/70 text-sm hidden md:inline tabular-nums">{now}</span>;
 }

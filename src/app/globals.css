@@ -8,7 +8,15 @@ html, body { height: 100%; }
 body {
   background: theme('colors.wall');
   color: theme('colors.ink');
+  font-weight: 400;
+  letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
+}
+
+@layer base {
+  h1, h2, h3 {
+    letter-spacing: -0.02em;
+  }
 }
 
 .num { font-variant-numeric: tabular-nums; }
@@ -29,7 +37,7 @@ body {
 
   .btn {
     @apply inline-flex items-center justify-center gap-2 h-11 px-4 rounded-card
-           font-semibold text-[15px] transition-all duration-150
+           font-medium text-[15px] transition-all duration-150
            disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none;
   }
   .btn-primary {
@@ -48,18 +56,18 @@ body {
            placeholder:text-muted/60 transition-colors
            focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand;
   }
-  .label { @apply block text-sm font-semibold text-ink mb-1.5; }
-  .hint  { @apply text-sm text-muted; }
+  .label { @apply block text-sm font-medium text-ink mb-1.5; }
+  .hint  { @apply text-sm text-muted font-light; }
 
   .th {
-    @apply text-left text-sm font-semibold text-muted px-4 py-2.5 bg-wall/80 border-b border-line;
+    @apply text-left text-sm font-medium text-muted px-4 py-2.5 bg-wall/80 border-b border-line;
   }
   .td {
     @apply px-4 py-3.5 border-b border-line text-[15px] align-middle;
   }
   .row-tap { @apply hover:bg-wall/70 cursor-pointer transition-colors; }
 
-  .pill { @apply inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full text-[13px] font-semibold; }
+  .pill { @apply inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full text-[13px] font-medium; }
   .pill-ok  { @apply pill bg-ok-light text-ok; }
   .pill-low { @apply pill bg-low-light text-low; }
   .pill-out { @apply pill bg-out-light text-out; }
@@ -78,4 +86,25 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+@media print {
+  html, body {
+    background: #fff !important;
+    height: auto !important;
+  }
+  body * { visibility: hidden; }
+  .bill-print, .bill-print * { visibility: visible; }
+  .bill-print {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 80mm;
+    max-width: 100%;
+    margin: 0;
+    padding: 8px 12px;
+    background: #fff;
+    color: #000;
+    box-shadow: none;
+  }
 }

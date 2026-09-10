@@ -29,7 +29,8 @@
     "password": "Password",
     "language": "භාෂාව",
     "languageEn": "English",
-    "languageSi": "සිංහල"
+    "languageSi": "සිංහල",
+    "print": "Print කරන්න"
   },
   "errors": {
     "loginRequired": "Login වෙන්න ඕන",
@@ -138,6 +139,20 @@
       "KEG": "Keg",
       "DRAFT": "Draft",
       "": "—"
+    },
+    "payment": {
+      "CASH": "මුදල්",
+      "CARD": "කාඩ්"
+    },
+    "serviceType": {
+      "DINE_IN": "Dine in",
+      "TAKEAWAY": "Takeaway"
+    },
+    "posCategory": {
+      "BURGERS": "බර්ගර්",
+      "SIDES": "Sides",
+      "DRINKS": "බීම",
+      "OTHER": "වෙනත්"
     }
   },
   "modules": {
@@ -175,7 +190,7 @@
     },
     "sales": {
       "title": "විකුණුම්",
-      "blurb": "විකුණුම් ගහනවා (හෝ පිටතින් API එකෙන් එවනවා), recipe එකට අනුව තොගය ඉබේ අඩු වෙනවා."
+      "blurb": "කවුන්ටරයේ order ගහලා bill print කරනවා. වට්ටෝරුවට අනුව තොගය ඉබේ අඩු වෙනවා. පිටත POS එකකින් API එකටත් එවන්න පුළුවන්."
     },
     "reports": {
       "title": "වාර්තා",
@@ -339,6 +354,9 @@
       "fieldYield": "කීයක් හැදෙනවද",
       "fieldYieldHint": "Sauce batch එකකින් කීයක් හැදෙනවද",
       "fieldSell": "විකුණන මිල",
+      "fieldPosCat": "POS කාණ්ඩය",
+      "fieldPosCatHint": "Order terminal එකේ tab එකක් විදිහට පේනවා",
+      "posCatAuto": "ඉබේ (නමෙන්)",
       "fieldIngredients": "මොනවද යන්නේ",
       "fieldIngredientsHint": "හැම එකකින්ම කීයක් යනවද ලියන්න",
       "unitCost": "එකක පිරිවැය",
@@ -482,21 +500,40 @@
     },
     "sales": {
       "title": "විකුණුම්",
-      "subtitle": "මෙතන විකුණුමක් ගැහුවම වට්ටෝරුවට අනුව අමුද්‍රව්‍ය ඉබේම තොගයෙන් අඩු වෙනවා.",
-      "add": "විකුණුමක් ගහන්න",
+      "subtitle": "කවුන්ටර terminal එකෙන් order ගහලා bill print කරන්න. විකුණුමක් ගැහුවම වට්ටෝරුවට අනුව අමුද්‍රව්‍ය තොගයෙන් අඩු වෙනවා.",
+      "openTerminal": "Terminal එකට යන්න",
       "statSales": "විකුණුම්",
       "statCost": "අමුද්‍රව්‍ය පිරිවැය",
       "statFoodCost": "Food cost",
       "emptyTitle": "තාම විකුණුමක් නෑ",
-      "emptyHint": "POS එකක් තියෙනවනම් ඒකෙන් API එකට එවන්නත් පුළුවන් — Settings වල key එක තියෙනවා.",
+      "emptyHint": "කවුන්ටර terminal එකෙන් order ගහන්න, නැත්නම් පිටත POS එකකින් API එකට එවන්න — Settings වල key එක තියෙනවා.",
       "colNo": "අංකය",
       "colItems": "දේවල්",
       "colAmount": "මුදල",
-      "modalTitle": "විකුණුමක් ගහන්න",
-      "modalNoRecipes": "මුලින්ම වට්ටෝරු හදන්න ඕන. Recipes පිටුවට යන්න.",
-      "cartTotal": "මුළු මුදල",
-      "submit": "විකුණුම ලියන්න",
-      "toastSaved": "විකුණුම ලියලා තියෙනවා. තොගය අඩු වුණා."
+      "cartTotal": "මුළු මුදල"
+    },
+    "terminal": {
+      "search": "මෙනුවේ හොයන්න",
+      "searchPh": "Burger, fries…",
+      "cart": "Order එක",
+      "cartEmpty": "අයිතම tap කරලා දාන්න",
+      "catAll": "ඔක්කොම",
+      "itemsCount": "අයිතම {count}ක්",
+      "clear": "Order එක හිස් කරන්න",
+      "location": "තොග තැන",
+      "pay": "ගෙවීම",
+      "charge": "Charge කරලා print කරන්න",
+      "printBill": "Bill එක print කරන්න",
+      "newOrder": "අලුත් order එකක්",
+      "backToSales": "විකුණුම්",
+      "noRecipes": "මුලින්ම menu වට්ටෝරු හදන්න ඕන. Recipes පිටුවට යන්න.",
+      "noMatch": "ඒ හොයන එකට ගැලපෙන අයිතමයක් නෑ.",
+      "thanks": "ස්තූතියි",
+      "cashier": "Cashier",
+      "qty": "ගණන",
+      "qtyDown": "ගණන අඩු කරන්න",
+      "qtyUp": "ගණන වැඩි කරන්න",
+      "item": "අයිතමය"
     },
     "reports": {
       "title": "වාර්තා",

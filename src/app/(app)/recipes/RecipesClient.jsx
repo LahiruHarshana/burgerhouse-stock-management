@@ -57,7 +57,7 @@ export default function RecipesClient({ cur, role }) {
 
 function RecipeModal({ recipe, cur, onClose, onDone, onErr }) {
   const { t, displayName } = useI18n();
-  const [f, setF] = useState({ name: '', nameSi: '', kind: 'MENU', yieldQty: 1, sellPrice: '' });
+  const [f, setF] = useState({ name: '', nameSi: '', kind: 'MENU', yieldQty: 1, sellPrice: '', posCategory: '' });
   const [lines, setLines] = useState([]);
   const [busy, setBusy] = useState(false);
   const [loaded, setLoaded] = useState(!recipe);
@@ -66,7 +66,8 @@ function RecipeModal({ recipe, cur, onClose, onDone, onErr }) {
     if (!recipe) return;
     api(`/api/recipes/${recipe._id}`).then((d) => {
       setF({ name: d.recipe.name, nameSi: d.recipe.nameSi || '', kind: d.recipe.kind,
-        yieldQty: d.recipe.yieldQty, sellPrice: d.recipe.sellPrice || '' });
+        yieldQty: d.recipe.yieldQty, sellPrice: d.recipe.sellPrice || '',
+        posCategory: d.recipe.posCategory || '' });
       setLines(d.recipe.lines.filter((l) => l.item).map((l) => ({
         item: l.item._id, name: displayName(l.item), unit: l.item.unit,
         cost: l.item.costPerUnit || 0, qty: l.qty,
@@ -99,7 +100,7 @@ function RecipeModal({ recipe, cur, onClose, onDone, onErr }) {
           <Field label={t('pages.recipes.fieldName')} required><input className="field" autoFocus value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} placeholder="Double Cheese Burger" /></Field>
           <Field label={t('pages.recipes.fieldNameSi')}><input className="field" value={f.nameSi} onChange={(e) => setF({ ...f, nameSi: e.target.value })} /></Field>
         </div>
-        <div className="grid sm:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Field label={t('pages.recipes.fieldKind')}>
             <select className="field" value={f.kind} disabled={!!recipe} onChange={(e) => setF({ ...f, kind: e.target.value })}>
               <option value="MENU">{t('pages.recipes.kindMenuOpt')}</option>
@@ -108,6 +109,17 @@ function RecipeModal({ recipe, cur, onClose, onDone, onErr }) {
           </Field>
           <Field label={t('pages.recipes.fieldYield')} hint={t('pages.recipes.fieldYieldHint')}><input className="field num" type="number" value={f.yieldQty} onChange={(e) => setF({ ...f, yieldQty: e.target.value })} /></Field>
           <Field label={t('pages.recipes.fieldSell')}><input className="field num" type="number" value={f.sellPrice} onChange={(e) => setF({ ...f, sellPrice: e.target.value })} /></Field>
+          {f.kind === 'MENU' && (
+            <Field label={t('pages.recipes.fieldPosCat')} hint={t('pages.recipes.fieldPosCatHint')}>
+              <select className="field" value={f.posCategory} onChange={(e) => setF({ ...f, posCategory: e.target.value })}>
+                <option value="">{t('pages.recipes.posCatAuto')}</option>
+                <option value="BURGERS">{t('enums.posCategory.BURGERS')}</option>
+                <option value="SIDES">{t('enums.posCategory.SIDES')}</option>
+                <option value="DRINKS">{t('enums.posCategory.DRINKS')}</option>
+                <option value="OTHER">{t('enums.posCategory.OTHER')}</option>
+              </select>
+            </Field>
+          )}
         </div>
 
         <Field label={t('pages.recipes.fieldIngredients')} required hint={t('pages.recipes.fieldIngredientsHint')}>
