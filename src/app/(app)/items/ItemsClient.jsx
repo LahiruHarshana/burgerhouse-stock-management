@@ -186,7 +186,12 @@ export default function ItemsClient({ categories, locations, enabled, cur, role 
           )}
 
           <div className="grid sm:grid-cols-3 gap-4">
-            <CostInput unit={f.unit} value={f.costPerUnit} onChange={(v) => set('costPerUnit', v)} />
+            <CostInput
+              unit={f.unit}
+              value={f.costPerUnit}
+              itemKey={editing?._id || 'new'}
+              onChange={(v) => set('costPerUnit', v)}
+            />
             <Field label={t('pages.items.yield')} hint={t('pages.items.yieldHint')}>
               <input className="field num" type="number" min="1" max="100" value={f.yieldPct} onChange={(e) => set('yieldPct', e.target.value)} />
             </Field>
