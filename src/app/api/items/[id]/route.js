@@ -27,10 +27,18 @@ export async function PUT(req, { params }) {
   const b = await body(req);
   const patch = clean(b);
   delete patch.code; // code එක වෙනස් කරන්න දෙන්නේ නෑ — history එක බිඳෙනවා
-  delete patch.costPerUnit; // cost එක movement වලින් ගණන් වෙනවා
   const item = await Item.findByIdAndUpdate(params.id, { $set: patch }, { new: true });
   if (!item) return badKey(g.locale, 'errors.notFound', 404);
-  await log(g.user, 'UPDATE', 'Item', item._id, { name: item.name });
+
+  if (g.enabled.includes('stock') && patch.costPerUnit != null) {
+    const levels = await StockLevel.find({ item: params.id });
+    for (const lv of levels) {
+      lv.value = lv.qty * patch.costPerUnit;
+      await lv.save();
+    }
+  }
+
+  await log(g.user, 'UPDATE', 'Item', item._id, { name: item.name, costPerUnit: patch.costPerUnit });
   return ok({ item });
 }
 

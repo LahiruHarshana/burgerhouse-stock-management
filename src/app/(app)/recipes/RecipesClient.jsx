@@ -114,6 +114,8 @@ function RecipeModal({ recipe, cur, onClose, onDone, onErr }) {
               <select className="field" value={f.posCategory} onChange={(e) => setF({ ...f, posCategory: e.target.value })}>
                 <option value="">{t('pages.recipes.posCatAuto')}</option>
                 <option value="BURGERS">{t('enums.posCategory.BURGERS')}</option>
+                <option value="HOT_DOGS">{t('enums.posCategory.HOT_DOGS')}</option>
+                <option value="SUBMARINES">{t('enums.posCategory.SUBMARINES')}</option>
                 <option value="SIDES">{t('enums.posCategory.SIDES')}</option>
                 <option value="DRINKS">{t('enums.posCategory.DRINKS')}</option>
                 <option value="OTHER">{t('enums.posCategory.OTHER')}</option>

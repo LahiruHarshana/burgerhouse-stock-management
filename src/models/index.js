@@ -162,7 +162,7 @@ const RecipeSchema = new Schema({
     qty: { type: Number, default: 0 },
     extraPrice: money,
   }],
-  posCategory: { type: String, enum: ['BURGERS', 'SIDES', 'DRINKS', 'OTHER'] },
+  posCategory: { type: String, enum: ['BURGERS', 'HOT_DOGS', 'SUBMARINES', 'SIDES', 'DRINKS', 'OTHER'] },
   sellPrice: money,
   cachedCost: money,          // ගණනය කරලා තියාගන්නවා -> report ඉක්මන්
   costUpdatedAt: Date,

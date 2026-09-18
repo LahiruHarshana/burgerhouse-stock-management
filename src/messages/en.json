@@ -150,6 +150,8 @@
     },
     "posCategory": {
       "BURGERS": "Burgers",
+      "HOT_DOGS": "Hot Dogs",
+      "SUBMARINES": "Submarines",
       "SIDES": "Sides",
       "DRINKS": "Drinks",
       "OTHER": "Other"
@@ -316,7 +318,9 @@
       "max": "Max level",
       "location": "Default location",
       "cost": "Cost (per {unit})",
-      "costHint": "Updates automatically when goods are received",
+      "costDisplay": "Price (per {unit})",
+      "costBaseNote": "Stock is counted in {baseUnit} — stored as {amount} per {baseUnit}",
+      "costHint": "Updates on GRN. You can also type the price here.",
       "yield": "Usable yield %",
       "yieldHint": "e.g. 1 kg chicken — if trimming leaves 85%, enter 85",
       "openingQty": "Opening quantity",

@@ -3,7 +3,9 @@ import { useEffect, useState, useCallback } from 'react';
 import { Page, Empty, Modal, Field, api, useDebounced, useToast, StatePill } from '@/components/ui';
 import Icon from '@/components/Icon';
 import { useI18n } from '@/components/I18nProvider';
-import { n, money, stockState } from '@/lib/fmt';
+import { n, stockState } from '@/lib/fmt';
+import { formatItemCost } from '@/lib/costUnit';
+import CostInput from '@/components/CostInput';
 
 const ITEM_TYPES = ['RAW', 'SEMI', 'FINISHED', 'NONFOOD'];
 const CONTAINERS = ['BOTTLE', 'CAN', 'KEG', 'DRAFT'];
@@ -123,7 +125,7 @@ export default function ItemsClient({ categories, locations, enabled, cur, role 
                   <td className="td hint">{it.category?.name || getEnum('itemType', it.type)}</td>
                   {hasStock && <td className="td num text-right font-semibold">{n(it.qty)} <span className="hint font-normal">{it.unit}</span></td>}
                   {hasStock && <td className="td"><StatePill state={stockState(it.qty, it.reorderLevel)} labels={stockLabels} /></td>}
-                  <td className="td num text-right">{money(it.costPerUnit, cur)}</td>
+                  <td className="td num text-right whitespace-nowrap">{formatItemCost(it.costPerUnit, it.unit, cur)}</td>
                 </tr>
               ))}
             </tbody>
@@ -184,10 +186,7 @@ export default function ItemsClient({ categories, locations, enabled, cur, role 
           )}
 
           <div className="grid sm:grid-cols-3 gap-4">
-            <Field label={t('pages.items.cost', { unit: f.unit })} hint={editing ? t('pages.items.costHint') : ''}>
-              <input className="field num" type="number" step="0.01" value={f.costPerUnit} disabled={!!editing}
-                onChange={(e) => set('costPerUnit', e.target.value)} />
-            </Field>
+            <CostInput unit={f.unit} value={f.costPerUnit} onChange={(v) => set('costPerUnit', v)} />
             <Field label={t('pages.items.yield')} hint={t('pages.items.yieldHint')}>
               <input className="field num" type="number" min="1" max="100" value={f.yieldPct} onChange={(e) => set('yieldPct', e.target.value)} />
             </Field>
