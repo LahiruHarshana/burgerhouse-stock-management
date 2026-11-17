@@ -1,11 +1,58 @@
-# Burger House Stock — User Guide
+# Burger House Stock — Full User Guide
 
-A step-by-step guide to using the stock management system. Each section explains **what** a feature does, **who** can use it, and **how** to use it with practical examples.
+A complete step-by-step guide to the stock management and counter POS system. Each section explains **what** a feature does, **who** can use it, and **how** to use it with practical examples.
+
+---
+
+## Quick reference — live system
+
+**Base URL (hosted on Vercel):** [https://burgerhouse-stock-management.vercel.app/](https://burgerhouse-stock-management.vercel.app/)
+
+| Page | URL |
+|------|-----|
+| **Home / Dashboard** | https://burgerhouse-stock-management.vercel.app/ |
+| **Login** | https://burgerhouse-stock-management.vercel.app/login |
+| **Counter terminal (POS)** | https://burgerhouse-stock-management.vercel.app/terminal |
+| **Sales history** | https://burgerhouse-stock-management.vercel.app/sales |
+| **Settings** | https://burgerhouse-stock-management.vercel.app/settings |
+
+| Item | Value |
+|------|-------|
+| **Hosting** | Vercel (free tier) |
+| **Session length** | 30 days (stays logged in) |
+| **Minimum password length** | 6 characters |
+| **Languages** | English and සිංහල (Sinhala) |
+
+### Login credentials (live system)
+
+Use these to sign in at the **Login** link above.
+
+| Role | Name | Username | Password | What they can do |
+|------|------|----------|----------|------------------|
+| **Owner** | Admin | `admin` | `burger123` | Full access — Settings, users, counter terminal, all modules |
+| **Chef** | Kamal | `kamal` | `kamal123` | Counter terminal, wastage, stocktake counts |
+| **Storekeeper** | Store | `store` | `store123` | Items, GRN, transfers, recipes, counter terminal |
+| **Manager** | Manager | `manager` | `manager123` | Approvals, stock adjustments, counter terminal |
+| **Viewer** | Viewer | `viewer` | `viewer123` | View only — reports and stock (no counter terminal) |
+
+**Fastest start:** open [Login](https://burgerhouse-stock-management.vercel.app/login) → username `admin` → password `burger123` → **Sign in**.
+
+> **Note:** If setup was run with different details, use the username and password chosen in the setup wizard. The Owner can add or reset staff accounts under **Users & Security**. Change default passwords before sharing the system widely.
+
+**Counter staff:** log in as `admin`, `kamal`, `store`, or `manager`, then open [Terminal](https://burgerhouse-stock-management.vercel.app/terminal) or go to **Sales → Open terminal**.
+
+### Local development (optional)
+
+| Item | URL |
+|------|-----|
+| Local app | `http://localhost:3000` |
+| Local terminal | `http://localhost:3000/terminal` |
 
 ---
 
 ## Table of contents
 
+0. [Login credentials & passwords](#0-login-credentials--passwords)
 1. [Introduction](#1-introduction)
 2. [First-time setup](#2-first-time-setup)
 3. [Logging in](#3-logging-in)
@@ -27,6 +74,78 @@ A step-by-step guide to using the stock management system. Each section explains
 19. [User roles & permissions](#19-user-roles--permissions)
 20. [Daily workflow example](#20-daily-workflow-example)
 21. [POS API (external sales)](#21-pos-api-external-sales)
+
+---
+
+## 0. Login credentials & passwords
+
+### 0.1 First-time setup creates the owner account
+
+During the setup wizard you enter:
+
+- Shop name
+- Your name
+- **Username** (stored lowercase, e.g. `admin`)
+- **Password** (minimum 6 characters)
+
+That account is always **Owner** — full access to Settings, users, and all modules.
+
+### 0.2 Logging in
+
+1. Open **https://burgerhouse-stock-management.vercel.app/login**
+2. Enter **username** and **password** (see [Quick reference](#quick-reference--live-system)).
+3. Click **Sign in**.
+
+**Owner login:**
+
+| Field | Value |
+|-------|-------|
+| Username | `admin` |
+| Password | `burger123` |
+
+### 0.3 Adding staff and passwords
+
+**Menu:** Users & Security → **Add user** (Owner only)
+
+| Field | Rules |
+|-------|--------|
+| Name | Display name on bills and audit log |
+| Username | Unique, lowercase; e.g. `kamal` |
+| Password | At least 6 characters; e.g. `kamal123` |
+| Role | Viewer / Chef / Storekeeper / Manager / Owner |
+
+After saving, give the staff member their username and password. They log in at the same login page as the owner.
+
+### 0.4 Changing a password
+
+**Owner changing another user’s password**
+
+1. Users & Security → click the user (or edit flow if available).
+2. Enter a new password (6+ characters) and save.
+
+**Staff forgot password**
+
+Only the **Owner** can set a new password. There is no self-service “forgot password” email in this version.
+
+### 0.5 Password and account rules
+
+| Rule | Detail |
+|------|--------|
+| Minimum length | 6 characters |
+| Usernames | Case-insensitive (`Admin` = `admin`) |
+| Deactivated users | Cannot log in (`active: false`) |
+| Wrong password | Message: “Incorrect username or password” |
+| Logout | Sidebar logout icon (or terminal header on `/terminal`) |
+
+### 0.6 What each role can log in to do
+
+| Role | Login → typical work |
+|------|----------------------|
+| **Owner** | Settings, users, all modules, counter terminal |
+| **Manager** | Stock adjustments, approve stocktake, counter terminal |
+| **Storekeeper** | Items, GRN, recipes, transfers, counter terminal |
+| **Chef** | Wastage, counter terminal, stocktake entry |
+| **Viewer** | Dashboard, stock view, reports only — **cannot** open `/terminal` |
 
 ---
 
@@ -56,7 +175,7 @@ You only do this once when the system is new.
 
 ### Step 1 — Shop details
 
-1. Open the app in your browser (e.g. `http://localhost:3000`).
+1. Open the app in your browser: **https://burgerhouse-stock-management.vercel.app/**
 2. You are taken to the **Setup** wizard automatically.
 3. Fill in:
    - **Shop name** — e.g. `Burger House`
@@ -93,18 +212,21 @@ This adds items like Beef Patty, Sesame Burger Bun, Cheese Burger recipe, and su
 
 ## 3. Logging in
 
-1. Go to the login page.
+1. Go to **https://burgerhouse-stock-management.vercel.app/login**
 2. Enter your **username** and **password**.
 3. Click **Sign in**.
 
-You stay logged in for 30 days. To log out, use the logout icon at the bottom of the sidebar.
+You stay logged in for 30 days. To log out, use the logout icon at the bottom of the sidebar (or the terminal header on the counter screen).
 
-**Example**
+### All accounts (live system)
 
-| Field    | Value      |
-|----------|------------|
-| Username | `admin`    |
-| Password | `burger123`|
+| Role | Username | Password |
+|------|----------|----------|
+| Owner | `admin` | `burger123` |
+| Chef | `kamal` | `kamal123` |
+| Storekeeper | `store` | `store123` |
+| Manager | `manager` | `manager123` |
+| Viewer | `viewer` | `viewer123` |
 
 ---
 
@@ -271,6 +393,19 @@ Click any row in the table to open the edit form. You can change name, reorder l
 ### 7.3 Sub-recipes
 
 Use type **Sub-recipe** for items used inside other recipes (e.g. a house sauce batch that yields multiple portions).
+
+### 7.4 POS category (counter terminal)
+
+For **Menu item** recipes, set **POS category** so the counter terminal groups tiles correctly:
+
+| Category | Typical items |
+|----------|----------------|
+| Burgers | Cheese Burger, Chicken Burger |
+| Sides | Fries, onion rings |
+| Drinks | Cola, water |
+| Other | Everything else |
+
+Leave **Auto (from name)** to let the system guess from the recipe name (e.g. “Fries” → Sides, “Burger” → Burgers).
 
 ---
 
@@ -495,7 +630,7 @@ Costing method (FIFO or Weighted average) is set in Settings and shown at the to
 
 ### Take an order (counter terminal)
 
-1. Open **Sales** and click **Open terminal** (or go to `/terminal`).
+1. Open **Sales** and click **Open terminal**, or go to **https://burgerhouse-stock-management.vercel.app/terminal**
 2. Use the **category tabs** (All, Burgers, Sides, Drinks) or search to find items.
 3. Tap a menu tile to add it — a badge shows the quantity. Tap again to add another.
 4. Choose **Takeaway** or **Dine in**.
@@ -570,12 +705,24 @@ An external POS can still send sales via the API (see §21).
 |----------|--------------|
 | Name     | Kamal        |
 | Username | kamal        |
-| Password | (6+ chars)   |
+| Password | kamal123     |
 | Role     | Chef         |
 
-3. Save.
+3. Save. Kamal logs in with `kamal` / `kamal123` and can open **Sales → Open terminal**.
 
-### 16.2 Activity log
+### 16.2 Example accounts for a small shop
+
+| Staff | Username | Password | Role |
+|-------|----------|----------|------|
+| Owner | admin | burger123 | Owner |
+| Counter / kitchen | kamal | kamal123 | Chef |
+| Store room | store | store123 | Storekeeper |
+| Supervisor | manager | manager123 | Manager |
+| Accounts (view only) | viewer | viewer123 | Viewer |
+
+Change every password before going live.
+
+### 16.3 Activity log
 
 **Activity log** tab shows audit entries: who performed actions and when (module changes, stock events, etc.).
 
@@ -702,8 +849,8 @@ If you use an external Point of Sale system, it can post sales to Burger House S
 
 ### Send a sale
 
-**Endpoint:** `POST /api/sales`  
-**Header:** `x-api-key: <your-api-key>`  
+**Endpoint:** `POST https://burgerhouse-stock-management.vercel.app/api/sales`  
+**Header:** `x-api-key: <your-api-key>` (copy from **Settings** on the live site)  
 **Body (JSON):**
 
 ```json
@@ -718,7 +865,16 @@ If you use an external Point of Sale system, it can post sales to Burger House S
 
 Recipe IDs come from your Recipes data. Each line deducts ingredients per the recipe.
 
-**Without API key:** Logged-in users with Chef role or above take orders on the **counter terminal** (`/terminal`). That still uses this same `POST /api/sales` endpoint.
+**Without API key:** Logged-in users with Chef role or above take orders on the **counter terminal**: https://burgerhouse-stock-management.vercel.app/terminal
+
+**Example (curl):**
+
+```bash
+curl -X POST https://burgerhouse-stock-management.vercel.app/api/sales \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: YOUR_KEY_FROM_SETTINGS" \
+  -d '{"lines":[{"recipe":"RECIPE_ID","qty":1}]}'
+```
 
 ---
 
@@ -727,12 +883,15 @@ Recipe IDs come from your Recipes data. Each line deducts ingredients per the re
 | Problem | What to check |
 |---------|----------------|
 | Module missing from menu | Settings → Features — turn it on and Save |
-| Cannot log in | Username/password; ask Owner to reset |
+| Cannot log in | Use credentials in [Quick reference](#quick-reference--live-system); usernames are lowercase; ask Owner to reset in Users & Security |
+| Viewer cannot open terminal | Expected — log in as Chef, Storekeeper, Manager, or Owner |
+| Terminal redirects to Sales | Your role is below Chef; use `kamal` / `store` / `manager` / `admin` |
 | Stock did not increase after delivery | Record a **GRN** under Purchasing, not just a PO |
 | Stock did not decrease after sale | Sale must use a **recipe**; recipe must have ingredients |
-| Print dialog did not open | Use **Print bill** on the preview; check the computer has a printer installed |
-| Wrong language on page | Use sidebar **English \| සිංහල** toggle; refresh if needed |
+| Print dialog did not open | Click **Print bill** on the preview; ensure a printer is installed on the counter PC |
+| Wrong language on page | Use **English \| සිංහල** toggle in the sidebar or terminal header |
 | Food cost seems wrong | Update item costs via GRN; check recipes and wastage entries |
+| Vercel site slow on first load | Free tier cold start — wait a few seconds and refresh |
 
 ---
 
@@ -744,9 +903,12 @@ Recipe IDs come from your Recipes data. Each line deducts ingredients per the re
 4. Create **recipes** for every menu item you sell.  
 5. Add **suppliers** and record opening stock via **Goods arrived**.  
 6. Add **users** with the right roles for each staff member.  
-7. Run one test **sale** and confirm stock deducted correctly.  
-8. Run one test **wastage** entry and confirm stock deducted.  
+7. Open **https://burgerhouse-stock-management.vercel.app/terminal** and run one test order with **Charge & print**.  
+8. Confirm stock deducted on **Stock Control** and the sale appears on **Sales**.  
+9. Run one test **wastage** entry and confirm stock deducted.  
+10. Change the default `admin` password in **Users & Security**.
 
 ---
 
-*Document version: 1.0 — Burger House Stock Management System*
+*Document version: 2.0 — Burger House Stock Management System*  
+*Live URL: https://burgerhouse-stock-management.vercel.app/*

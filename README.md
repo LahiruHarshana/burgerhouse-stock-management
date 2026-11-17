@@ -45,7 +45,8 @@ npm run build
 npm start
 ```
 
-Browser: `http://localhost:3000`
+Browser (local): `http://localhost:3000`  
+Live (Vercel): https://burgerhouse-stock-management.vercel.app/
 
 ### 5. Setup Wizard
 
